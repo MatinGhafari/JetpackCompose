@@ -19,8 +19,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.currentCompositionLocalContext
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import ir.matin.jetpackcompose.ui.theme.JetpackComposeTheme
 
 class MainActivity : ComponentActivity() {
@@ -32,19 +38,14 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
-//use modifier for define more attributes for views
 @Composable
 fun Greeting(name: String) {
-    Text(
-        text = "$name!",
-        modifier = Modifier
-            .padding(10.dp)
-            .clickable {
-            }
-            .padding(10.dp)
+    // add style to text with textStyle
+    Text(text = name, modifier = Modifier.padding(20.dp), style = TextStyle(
+        color = Color.Blue , fontWeight = FontWeight.Bold , fontSize = 15.sp
 
+    ))
 
-    )
 }
 
 
