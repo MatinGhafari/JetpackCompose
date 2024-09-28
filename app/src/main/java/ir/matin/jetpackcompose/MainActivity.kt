@@ -2,6 +2,7 @@ package ir.matin.jetpackcompose
 
 import android.content.Context
 import android.os.Bundle
+import android.widget.Space
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -10,6 +11,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -51,12 +53,21 @@ class MainActivity : ComponentActivity() {
 fun MainScreen() {
 
         Surface(modifier = Modifier.fillMaxSize()) {
-                //we can use Arrangement.SpaceEvenly to sort our surface in screen. its like chain in constraint layout
-            Row(horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+
+            Column(verticalArrangement = Arrangement.SpaceEvenly , horizontalAlignment = Alignment.CenterHorizontally) {
+
+
+
                 RectangleBox(color = Color.Blue)
+
+                //we can use spacer instead of padding like this:
+                Spacer(Modifier.height(8.dp))
+
                 RectangleBox(color = Color.Green)
+                Spacer(Modifier.height(8.dp))
                 RectangleBox(color = Color.Red)
             }
+
 
         }
 
@@ -77,7 +88,9 @@ fun RectangleBox(color: Color){
 
     Surface(
         color = color,
-        modifier = Modifier.size(width = 70.dp , height = 700.dp)
+        modifier = Modifier
+            .size(width = 700.dp, height = 100.dp)
+            .padding(8.dp)
 
     ) {
 
