@@ -7,7 +7,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -47,24 +49,43 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun MainScreen() {
-    // using Surface : Surface is like ViewGroup in xml. we write our code into surface and manage it with functions.
-    Surface(color = Color.Cyan , modifier = Modifier.fillMaxSize() ) {
 
-        Surface(color = Color.Blue , modifier = Modifier.fillMaxWidth().wrapContentSize(align = Alignment.TopCenter)) {
+        Surface(modifier = Modifier.fillMaxSize()) {
+                //we can use Arrangement.SpaceEvenly to sort our surface in screen. its like chain in constraint layout
+            Row(horizontalArrangement = Arrangement.SpaceEvenly, verticalAlignment = Alignment.CenterVertically) {
+                RectangleBox(color = Color.Blue)
+                RectangleBox(color = Color.Green)
+                RectangleBox(color = Color.Red)
+            }
 
-            Text(text = "Hi mmm", style = MaterialTheme.typography.titleLarge,
-                modifier = Modifier.wrapContentSize(align = Alignment.TopCenter) )
         }
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+@Composable
+fun RectangleBox(color: Color){
+
+    Surface(
+        color = color,
+        modifier = Modifier.size(width = 70.dp , height = 700.dp)
+
+    ) {
 
 
     }
 
 
-
-
-
 }
-
 
 @Preview(showBackground = true)
 @Composable
