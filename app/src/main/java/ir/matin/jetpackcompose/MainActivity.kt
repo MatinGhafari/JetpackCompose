@@ -51,21 +51,24 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun MainScreen() {
-
+//Combination of column and row
         Surface(modifier = Modifier.fillMaxSize()) {
 
-            Column(verticalArrangement = Arrangement.SpaceEvenly , horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(verticalArrangement = Arrangement.Center , horizontalAlignment = Alignment.CenterHorizontally) {
 
 
 
-                RectangleBox(color = Color.Blue)
+                RectangleBoxHorizontal(color = Color.Blue)
+                RectangleBoxHorizontal(color = Color.Green)
+                Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp , bottom = 8.dp) , horizontalArrangement = Arrangement.SpaceEvenly , verticalAlignment = Alignment.CenterVertically) {
+                    RectangleBoxVertical(color = Color.Yellow)
+                    RectangleBoxVertical(color = Color.Magenta)
+                    RectangleBoxVertical(color = Color.Black)
 
-                //we can use spacer instead of padding like this:
-                Spacer(Modifier.height(8.dp))
 
-                RectangleBox(color = Color.Green)
-                Spacer(Modifier.height(8.dp))
-                RectangleBox(color = Color.Red)
+                }
+                RectangleBoxHorizontal(color = Color.Red)
+                RectangleBoxHorizontal(color = Color.Cyan)
             }
 
 
@@ -84,13 +87,28 @@ fun MainScreen() {
 
 
 @Composable
-fun RectangleBox(color: Color){
+fun RectangleBoxHorizontal(color: Color){
 
     Surface(
         color = color,
         modifier = Modifier
             .size(width = 700.dp, height = 100.dp)
-            .padding(8.dp)
+
+    ) {
+
+
+    }
+
+
+}
+
+@Composable
+fun RectangleBoxVertical(color: Color){
+
+    Surface(
+        color = color,
+        modifier = Modifier
+            .size(width = 70.dp, height = 200.dp)
 
     ) {
 
