@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -51,6 +53,9 @@ fun MainScreen() {
         )
     }
 
+    //create state for TextField
+    val textFieldState = remember {  mutableStateOf("") }
+
     Surface(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -58,11 +63,10 @@ fun MainScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            StudentShowName(namesState) {
-                namesState.add("mohammad")
+            StudentShowName(namesState, { namesState.add(textFieldState.value) } ,
+                textFieldState.value , { textFieldState.value=it  }
+                )
 
-
-            }
 
         }
     }
@@ -70,16 +74,22 @@ fun MainScreen() {
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun StudentShowName(names:List<String>,onButtonClicked : () ->Unit) {
+
+//get data from parent
+fun StudentShowName(
+    names: List<String>, onButtonClicked: () -> Unit,
+    textFieldValue: String, onTextFieldValueChanged: (String) -> Unit,
+) {
 
 
     names.forEach {
         Text(text = it)
     }
-    Button(onClick = onButtonClicked ) {
+    Button(onClick = onButtonClicked) {
         Text(text = "add item")
-
     }
+    //create textField
+    TextField(value = textFieldValue, onValueChange =onTextFieldValueChanged)
 
 
 }
