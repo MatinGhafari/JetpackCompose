@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,38 +25,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModelProvider
+import ir.matin.jetpackcompose.ui.MainViewModel
 import ir.matin.jetpackcompose.ui.theme.JetpackComposeTheme
 
 val names = arrayListOf("matin", "ali", "sajjad", "mohammad", "mina", "amir")
 
 class MainActivity : ComponentActivity() {
+    private lateinit var mainViewModel: MainViewModel
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+            mainViewModel= ViewModelProvider(this)[MainViewModel::class.java]
         setContent {
-            MainScreen()
+            MainScreen(mainViewModel)
 
         }
     }
 }
 
 @Composable
-fun MainScreen() {
-    //state
-    val namesState = remember {
-        mutableStateListOf<String>(
-            "matin",
-            "ali",
-            "sajjad",
-            "mohammad",
-            "mina",
-            "amir"
-        )
-    }
-
-    //create state for TextField
-    val textFieldState = remember {  mutableStateOf("") }
-
+fun MainScreen(mainViewModel: MainViewModel) {
+    val textFieldState = mainViewModel.textFieldLiveData.observeAsState("")
     Surface(modifier = Modifier.fillMaxSize()) {
 
         Column(
@@ -63,9 +53,9 @@ fun MainScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            StudentShowName(namesState, { namesState.add(textFieldState.value) } ,
-                textFieldState.value , { textFieldState.value=it  }
-                )
+            StudentShowName(
+                textFieldState.value
+            ) { mainViewModel.onDataTextFieldChanged(it) }
 
 
         }
@@ -77,25 +67,13 @@ fun MainScreen() {
 
 //get data from parent
 fun StudentShowName(
-    names: List<String>, onButtonClicked: () -> Unit,
     textFieldValue: String, onTextFieldValueChanged: (String) -> Unit,
 ) {
-
-
-    names.forEach {
-        Text(text = it)
-    }
-    Button(onClick = onButtonClicked) {
-        Text(text = "add item")
-    }
-    //create textField
-    TextField(value = textFieldValue, onValueChange =onTextFieldValueChanged)
-
+//do
 
 }
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-    MainScreen()
 }
