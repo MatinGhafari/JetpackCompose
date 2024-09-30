@@ -1,35 +1,20 @@
 package ir.matin.jetpackcompose
 
-import android.content.Context
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Space
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.requiredHeight
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.currentCompositionLocalContext
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -38,6 +23,8 @@ import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.matin.jetpackcompose.ui.theme.JetpackComposeTheme
+
+val names = arrayListOf("matin", "ali", "sajjad", "mohammad", "mina", "amir")
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,69 +36,48 @@ class MainActivity : ComponentActivity() {
         }
     }
 }
+
 @Composable
 fun MainScreen() {
-//Combination of column and row
-        Surface(modifier = Modifier.fillMaxSize()) {
-
-            Column(verticalArrangement = Arrangement.Center , horizontalAlignment = Alignment.CenterHorizontally) {
-
-
-
-                RectangleBoxHorizontal(color = Color.Blue)
-                RectangleBoxHorizontal(color = Color.Green)
-                Row(modifier = Modifier.fillMaxWidth().padding(top = 8.dp , bottom = 8.dp) , horizontalArrangement = Arrangement.SpaceEvenly , verticalAlignment = Alignment.CenterVertically) {
-                    RectangleBoxVertical(color = Color.Yellow)
-                    RectangleBoxVertical(color = Color.Magenta)
-                    RectangleBoxVertical(color = Color.Black)
-
-
-                }
-                RectangleBoxHorizontal(color = Color.Red)
-                RectangleBoxHorizontal(color = Color.Cyan)
-            }
-
-
-        }
-
-
-        }
-
-
-
-
-
-
-
-
-
-
-@Composable
-fun RectangleBoxHorizontal(color: Color){
-
-    Surface(
-        color = color,
-        modifier = Modifier
-            .size(width = 700.dp, height = 100.dp)
-
-    ) {
-
-
+    //state
+    val namesState = remember {
+        mutableStateListOf<String>(
+            "matin",
+            "ali",
+            "sajjad",
+            "mohammad",
+            "mina",
+            "amir"
+        )
     }
 
+    Surface(modifier = Modifier.fillMaxSize()) {
 
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            StudentShowName(namesState) {
+                namesState.add("mohammad")
+
+
+            }
+
+        }
+    }
 }
 
+@SuppressLint("RememberReturnType")
 @Composable
-fun RectangleBoxVertical(color: Color){
+fun StudentShowName(names:List<String>,onButtonClicked : () ->Unit) {
 
-    Surface(
-        color = color,
-        modifier = Modifier
-            .size(width = 70.dp, height = 200.dp)
 
-    ) {
-
+    names.forEach {
+        Text(text = it)
+    }
+    Button(onClick = onButtonClicked ) {
+        Text(text = "add item")
 
     }
 
@@ -121,5 +87,5 @@ fun RectangleBoxVertical(color: Color){
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
-  MainScreen()
+    MainScreen()
 }
