@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
+import coil.compose.AsyncImage
 import ir.matin.jetpackcompose.ui.ItemList
 import ir.matin.jetpackcompose.ui.itemList2
 import ir.matin.jetpackcompose.ui.theme.MyAppTheme
@@ -60,12 +61,9 @@ fun ItemList(itemList: ItemList) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // use coil 
+            AsyncImage(model = itemList.image, contentDescription = null , modifier = Modifier.size(50.dp ,50.dp).padding(4.dp))
 
-            Image(
-                painterResource(id = itemList.image),
-                contentDescription = null,
-                modifier = Modifier.size(50.dp, 50.dp)
-            )
             Text(text = itemList.title)
 
 
@@ -79,12 +77,14 @@ fun ItemList(itemList: ItemList) {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun MainScreen(data:List<ItemList>) {
+fun MainScreen(data: List<ItemList>) {
     Surface(modifier = Modifier.fillMaxSize(), color = Color.Gray) {
-        LazyColumn(verticalArrangement = Arrangement.Center , horizontalAlignment = Alignment.CenterHorizontally) {
-            items(data){
-             ItemList(itemList = it)
-
+        LazyColumn(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            items(data) {
+                ItemList(itemList = it)
 
 
             }
